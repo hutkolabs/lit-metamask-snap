@@ -1,3 +1,4 @@
+import { KeyringSnapRpcClient } from '@metamask/keyring-api';
 import styled from 'styled-components';
 
 import {
@@ -7,13 +8,8 @@ import {
   SendHelloButton,
   Card,
 } from '../components';
-import { defaultSnapOrigin } from '../config';
-import {
-  useMetaMask,
-  useInvokeSnap,
-  useMetaMaskContext,
-  useRequestSnap,
-} from '../hooks';
+import { defaultSnapOrigin, defaultSnapOrigin as snapId } from '../config';
+import { useMetaMask, useMetaMaskContext, useRequestSnap } from '../hooks';
 import { isLocalSnap, shouldDisplayReconnectButton } from '../utils';
 
 const Container = styled.div`
@@ -100,18 +96,21 @@ const ErrorMessage = styled.div`
   }
 `;
 
+const client = new KeyringSnapRpcClient(snapId, window.ethereum);
+
 const Index = () => {
   const { error } = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
-  const invokeSnap = useInvokeSnap();
+  // const invokeSnap = useInvokeSnap();
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
     ? isFlask
     : snapsDetected;
 
   const handleSendHelloClick = async () => {
-    await invokeSnap({ method: 'hello' });
+    const data = await client.listAccounts();
+    console.log('data:', data);
   };
 
   return (

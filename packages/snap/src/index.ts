@@ -1,36 +1,89 @@
-import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
-import { panel, text } from '@metamask/snaps-sdk';
+import { handleKeyringRequest } from '@metamask/keyring-api';
+import type {
+  OnKeyringRequestHandler,
+  OnRpcRequestHandler,
+} from '@metamask/snaps-types';
 
-/**
- * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
- *
- * @param args - The request handler args as object.
- * @param args.origin - The origin of the request, e.g., the website that
- * invoked the snap.
- * @param args.request - A validated JSON-RPC request object.
- * @returns The result of `snap_dialog`.
- * @throws If the request method is not valid for this snap.
- */
+import { ERC4337Keyring } from './keyring';
+import { getState } from './management';
+// import { logRequest } from './utils';
+
+let keyring: ERC4337Keyring;
+
+// Logs and pass the control to next handler
+const loggerHandler: OnRpcRequestHandler = async ({ origin, request }) => {
+  // await snap.request({
+  //   method: 'snap_manageState',
+  //   params: { operation: 'clear' },
+  // });
+  // console.log(
+  //   await snap.request({
+  //     method: 'snap_manageState',
+  //     params: { operation: 'get' },
+  //   }),
+  // );
+
+  const { id } = request;
+  console.log(
+    `[Snap] request (id=${id?.toString() ?? 'null'}, origin=${origin}):`,
+    request,
+  );
+  // throw new MethodNotSupportedError(request.method);
+};
+
+// const customHandler: OnRpcRequestHandler = async ({
+//   request,
+// }): Promise<any> => {
+//   switch (request.method) {
+//     // internal methods
+//     case SigningMethods.SendTransaction: {
+//       return snap.request({
+//         method: 'snap_dialog',
+//         params: {
+//           type: 'alert',
+//           content: panel([
+//             heading('Something happened in the system'),
+//             text('The thing that happened is...'),
+//           ]),
+//         },
+//       });
+//     }
+
+//     default: {
+//       throw new MethodNotSupportedError(request.method);
+//     }
+//   }
+// };
+
 export const onRpcRequest: OnRpcRequestHandler = async ({
   origin,
   request,
 }) => {
-  switch (request.method) {
-    case 'hello':
-      return snap.request({
-        method: 'snap_dialog',
-        params: {
-          type: 'confirmation',
-          content: panel([
-            text(`Hello, **${origin}**!`),
-            text('This custom confirmation is just for display purposes.'),
-            text(
-              'But you can edit the snap source code to make it do something, if you want to!',
-            ),
-          ]),
-        },
-      });
-    default:
-      throw new Error('Method not found.');
+  await loggerHandler({ origin, request });
+
+  if (!keyring) {
+    const keyringState = await getState();
+    // eslint-disable-next-line require-atomic-updates
+    keyring = new ERC4337Keyring(keyringState);
   }
+  return await handleKeyringRequest(keyring, request);
+};
+
+// export const onRpcRequest: OnRpcRequestHandler = buildHandlersChain(
+//   loggerHandler,
+//   keyringHandler,
+// );
+
+export const onKeyringRequest: OnKeyringRequestHandler = async ({
+  origin,
+  request,
+}) => {
+  await loggerHandler({ origin, request });
+
+  if (!keyring) {
+    const keyringState = await getState();
+    // eslint-disable-next-line require-atomic-updates
+    keyring = new ERC4337Keyring(keyringState);
+  }
+  return await handleKeyringRequest(keyring, request);
 };
