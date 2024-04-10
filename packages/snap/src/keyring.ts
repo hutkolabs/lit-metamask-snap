@@ -12,8 +12,7 @@ import type {
   KeyringResponse,
 } from '@metamask/keyring-api';
 import type { Json } from '@metamask/utils';
-import { JsonRpcProvider, Wallet as EthersWallet } from 'ethers';
-import { v4 as uuid } from 'uuid';
+import { JsonRpcProvider, Wallet as EthersWallet, uuidV4 } from 'ethers';
 
 import { Lit, RPC_URL } from './lit';
 import { getState, saveState } from './management';
@@ -28,6 +27,11 @@ export type KeyringState = {
 export type Wallet = {
   account: KeyringAccount;
   privateKey: string;
+};
+
+const uuid = () => {
+  // eslint-disable-next-line no-restricted-globals
+  return uuidV4(crypto.getRandomValues(new Uint8Array(16)));
 };
 
 /**

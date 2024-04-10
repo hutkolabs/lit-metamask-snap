@@ -5825,6 +5825,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@simplewebauthn/browser@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "@simplewebauthn/browser@npm:9.0.1"
+  dependencies:
+    "@simplewebauthn/types": ^9.0.1
+  checksum: eb7adcddf8b73c13c5551cc4ed4531135d2cb42947936b13c7c3b7d660fcf9b69f282a846aa2140d76db3d1c81d7502eaec5412fa51cd6ebe251882118ecac23
+  languageName: node
+  linkType: hard
+
+"@simplewebauthn/types@npm:^9.0.1":
+  version: 9.0.1
+  resolution: "@simplewebauthn/types@npm:9.0.1"
+  checksum: 416dfd688eb706a680df4f0982c9ea32535664e015e3c63982f37d61d63a217d440268467658dc2af7bc7ed9d7ac532efb8e752fcc503a79c8e7dc27295ea81b
+  languageName: node
+  linkType: hard
+
 "@sinclair/typebox@npm:^0.24.1":
   version: 0.24.20
   resolution: "@sinclair/typebox@npm:0.24.20"
@@ -15885,6 +15901,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jose@npm:^5.2.4":
+  version: 5.2.4
+  resolution: "jose@npm:5.2.4"
+  checksum: 81e1f4494f406debd14392975327f0daa8b88ff09c83f2fe94754dcd7cfdefdb1adf785b2ec7481751927e609d342581cd41cb444628ef62fca423facebcd280
+  languageName: node
+  linkType: hard
+
 "js-sha3@npm:0.8.0":
   version: 0.8.0
   resolution: "js-sha3@npm:0.8.0"
@@ -17302,13 +17325,6 @@ __metadata:
     uint8arrays: ^3.0.0
     varint: ^6.0.0
   checksum: d53aaf7efd52ee5e6413ef36ececd29239ceb5c1f048c1fa9b820442226dc232067312d25e509a2571a14047465fb934dd35029c7f3166f4d02d13e3c501925d
-  languageName: node
-  linkType: hard
-
-"multiformats@npm:^11.0.2":
-  version: 11.0.2
-  resolution: "multiformats@npm:11.0.2"
-  checksum: e587bbe709f29e42ae3c22458c960070269027d962183afc49a83b8ba26c31525e81ce2ac71082a52ba0a75e9aed4d0d044cac68d32656fdcd5cd340fb367fac
   languageName: node
   linkType: hard
 
@@ -20559,7 +20575,7 @@ __metadata:
   resolution: "siwe-recap@npm:0.0.2-alpha.0"
   dependencies:
     canonicalize: ^2.0.0
-    multiformats: ^11.0.2
+    multiformats: ^9.7.1
     siwe: ^2.1.4
   peerDependencies:
     ethers: ^5.5.1
@@ -20647,6 +20663,7 @@ __metadata:
     "@metamask/snaps-sdk": ^3.2.0
     "@metamask/snaps-types": ^3.1.0
     "@metamask/snaps-ui": ^3.1.0
+    "@simplewebauthn/browser": ^9.0.1
     "@typescript-eslint/eslint-plugin": ^5.42.1
     "@typescript-eslint/parser": ^5.42.1
     buffer: ^6.0.3
@@ -20661,12 +20678,12 @@ __metadata:
     eslint-plugin-promise: ^6.1.1
     ethers: ^6.11.1
     jest: ^29.5.0
+    jose: ^5.2.4
     prettier: ^2.7.1
     prettier-plugin-packagejson: ^2.2.11
     rimraf: ^3.0.2
     ts-jest: ^29.1.0
     typescript: ^4.7.4
-    uuid: ^9.0.1
   languageName: unknown
   linkType: soft
 
