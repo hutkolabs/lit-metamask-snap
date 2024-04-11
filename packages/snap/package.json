@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "allow-scripts": "yarn workspace root allow-scripts",
-    "build": "mm-snap build",
+    "build": "mm-snap build && node scripts/post-process.js && yarn mm-snap eval && yarn mm-snap manifest --fix",
     "build:clean": "yarn clean && yarn build",
     "clean": "rimraf dist",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
@@ -23,8 +23,9 @@
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' --ignore-path .gitignore",
     "prepublishOnly": "mm-snap manifest",
     "serve": "mm-snap serve",
-    "start": "mm-snap watch",
-    "test": "jest"
+    "start": "yarn build && yarn serve",
+    "test": "jest",
+    "watch": "mm-snap watch"
   },
   "dependencies": {
     "@ethereumjs/tx": "^5.3.0",
