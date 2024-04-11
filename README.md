@@ -51,3 +51,18 @@ script in the `lavamoat.allowScripts` section of `package.json`.
 
 See the documentation for [@lavamoat/allow-scripts](https://github.com/LavaMoat/LavaMoat/tree/main/packages/allow-scripts)
 for more information.
+
+## Notes
+
+To make the snap work, you need to do few things.
+
+1. patch the ipfs-utils package. This is because the snap doesn't allow to use XMLHttpRequest.
+
+To do it go to ipfs-utils/src/http/fetch.browser.js and replace fetchWithProgress with fetchWithStreaming in line 106.
+
+2. Run post progress script to remove some HTML comments that are incompetible with SES. Run
+
+```
+cd ./packages/snap && yarn mm-snap build && node scripts/post-process.js && yarn mm-snap eval
+
+```
