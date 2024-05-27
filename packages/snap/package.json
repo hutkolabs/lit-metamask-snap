@@ -36,7 +36,7 @@
     "@lit-protocol/lit-node-client": "^4.2.0",
     "@lit-protocol/pkp-ethers": "^4.2.0",
     "@lit-protocol/types": "^4.2.0",
-    "@metamask/keyring-api": "^5.1.0",
+    "@metamask/keyring-api": "^6.2.1",
     "@metamask/snaps-sdk": "^3.2.0",
     "@metamask/snaps-types": "^3.1.0",
     "@metamask/snaps-ui": "^3.1.0",
